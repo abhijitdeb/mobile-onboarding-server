@@ -1,0 +1,25 @@
+{
+    "name": "cbp-mobile-onboarding-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon app.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "express-graphql": "^0.9.0",
+        "graphql": "^15.0.0",
+        "mysql2": "^2.1.0",
+        "sequelize": "^5.21.7"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.3",
+        "babel-preset-node8": "^1.2.0",
+        "@babel/core": "^7.9.6"
+    }
+}
