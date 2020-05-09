@@ -1,96 +1,96 @@
-const express = require("express");
-const express_graphql = require("express-graphql");
-const { buildSchema } = require("graphql");
-const User = require("./src/models/User");
-const Application = require("./src/models/Application");
+const express = require('express');
+const express_graphql = require('express-graphql');
+const { buildSchema } = require('graphql');
+const User = require('./src/models/User');
+const Application = require('./src/models/Application');
 
 User.hasMany(Application, {
-    as: "Applications",
-    foreignKey: "userId",
+	as: 'Applications',
+	foreignKey: 'userId'
 });
 
 Application.belongsTo(User, {
-    as: "User",
-    foreignKey: "userId",
+	as: 'User',
+	foreignKey: 'userId'
 });
 
 const errHandler = (err) => {
-    console.error("Error: ", err);
+	console.error('Error: ', err);
 };
 
 const getUser = async (userName) => {
-    const users = await User.findAll({
-        where: { userName: userName },
-    }).catch(errHandler);
-    return users[0];
+	const users = await User.findAll({
+		where: { userName: userName }
+	}).catch(errHandler);
+	return users[0];
 };
 
 const getApplication = async (id) => {
-    return await Application.findByPk(id).catch(errHandler);
+	return await Application.findByPk(id).catch(errHandler);
 };
 
 const getApplications = async (appSponsorName) => {
-    const users = await User.findAll({
-        where: { userName: appSponsorName },
-        include: [{ model: Application, as: "Applications" }],
-    }).catch(errHandler);
-    return users[0].Applications;
+	const users = await User.findAll({
+		where: { userName: appSponsorName },
+		include: [ { model: Application, as: 'Applications' } ]
+	}).catch(errHandler);
+	return users[0].Applications;
 };
 
 const createApplication = async (input) => {
-    return await Application.create({
-        userId: input.userId,
-        appTeamContactInfo: input.appTeamContactInfo,
-        appName: input.appName,
-        appSponsorName: input.appSponsorName,
-        appSponsorEmail: input.appSponsorEmail,
-        appSponsorPhoneNumber: input.appSponsorPhoneNumber,
-        appDescription: input.appDescription,
-        targetDeviceModels: input.targetDeviceModels,
-        authMethod: input.authMethod,
-        vpnTunnelNeeded: input.vpnTunnelNeeded,
-        networkAccessRequired: input.networkAccessRequired,
-        securityScansCompleted: input.securityScansCompleted,
-        deploymentDate: input.deploymentDate,
-        releaseCycle: input.releaseCycle,
-        endUserGroups: input.endUserGroups,
-        numberOfEndUsers: input.numberOfEndUsers,
-        mandatoryApplication: input.mandatoryApplication,
-        addedSecurityStandards: input.addedSecurityStandards,
-        additionalComments: input.additionalComments,
-        rating: input.rating,
-    }).catch(errHandler);
+	return await Application.create({
+		userId: input.userId,
+		appTeamContactInfo: input.appTeamContactInfo,
+		appName: input.appName,
+		appSponsorName: input.appSponsorName,
+		appSponsorEmail: input.appSponsorEmail,
+		appSponsorPhoneNumber: input.appSponsorPhoneNumber,
+		appDescription: input.appDescription,
+		targetDeviceModels: input.targetDeviceModels,
+		authMethod: input.authMethod,
+		vpnTunnelNeeded: input.vpnTunnelNeeded,
+		networkAccessRequired: input.networkAccessRequired,
+		securityScansCompleted: input.securityScansCompleted,
+		deploymentDate: input.deploymentDate,
+		releaseCycle: input.releaseCycle,
+		endUserGroups: input.endUserGroups,
+		numberOfEndUsers: input.numberOfEndUsers,
+		mandatoryApplication: input.mandatoryApplication,
+		addedSecurityStandards: input.addedSecurityStandards,
+		additionalComments: input.additionalComments,
+		rating: input.rating
+	}).catch(errHandler);
 };
 
 const updateApplication = async (input) => {
-    await Application.update(
-        {
-            userId: input.userId,
-            appTeamContactInfo: input.appTeamContactInfo,
-            appName: input.appName,
-            appSponsorName: input.appSponsorName,
-            appSponsorEmail: input.appSponsorEmail,
-            appSponsorPhoneNumber: input.appSponsorPhoneNumber,
-            appDescription: input.appDescription,
-            targetDeviceModels: input.targetDeviceModels,
-            authMethod: input.authMethod,
-            vpnTunnelNeeded: input.vpnTunnelNeeded,
-            networkAccessRequired: input.networkAccessRequired,
-            securityScansCompleted: input.securityScansCompleted,
-            deploymentDate: input.deploymentDate,
-            releaseCycle: input.releaseCycle,
-            endUserGroups: input.endUserGroups,
-            numberOfEndUsers: input.numberOfEndUsers,
-            mandatoryApplication: input.mandatoryApplication,
-            addedSecurityStandards: input.addedSecurityStandards,
-            additionalComments: input.additionalComments,
-            rating: input.rating,
-        },
-        {
-            where: { id: input.id },
-        }
-    ).catch(errHandler);
-    return await Application.findByPk(input.id).catch(errHandler);
+	await Application.update(
+		{
+			userId: input.userId,
+			appTeamContactInfo: input.appTeamContactInfo,
+			appName: input.appName,
+			appSponsorName: input.appSponsorName,
+			appSponsorEmail: input.appSponsorEmail,
+			appSponsorPhoneNumber: input.appSponsorPhoneNumber,
+			appDescription: input.appDescription,
+			targetDeviceModels: input.targetDeviceModels,
+			authMethod: input.authMethod,
+			vpnTunnelNeeded: input.vpnTunnelNeeded,
+			networkAccessRequired: input.networkAccessRequired,
+			securityScansCompleted: input.securityScansCompleted,
+			deploymentDate: input.deploymentDate,
+			releaseCycle: input.releaseCycle,
+			endUserGroups: input.endUserGroups,
+			numberOfEndUsers: input.numberOfEndUsers,
+			mandatoryApplication: input.mandatoryApplication,
+			addedSecurityStandards: input.addedSecurityStandards,
+			additionalComments: input.additionalComments,
+			rating: input.rating
+		},
+		{
+			where: { id: input.id }
+		}
+	).catch(errHandler);
+	return await Application.findByPk(input.id).catch(errHandler);
 };
 
 //GraphQL Schema
@@ -166,26 +166,26 @@ const schema = buildSchema(`
 
 //Root resolver
 const root = {
-    user: ({ userName }) => getUser(userName),
-    application: ({ id }) => getApplication(id),
-    applications: ({ appSponsorName }) => getApplications(appSponsorName),
-    createApplication: ({ input }) => createApplication(input),
-    updateApplication: ({ input }) => updateApplication(input),
+	user: ({ userName }) => getUser(userName),
+	application: ({ id }) => getApplication(id),
+	applications: ({ appSponsorName }) => getApplications(appSponsorName),
+	createApplication: ({ input }) => createApplication(input),
+	updateApplication: ({ input }) => updateApplication(input)
 };
 
 const app = express();
 
 app.use(
-    "/graphql",
-    express_graphql({
-        schema: schema,
-        rootValue: root,
-        graphiql: true,
-    })
+	'/graphql',
+	express_graphql({
+		schema: schema,
+		rootValue: root,
+		graphiql: true
+	})
 );
 
 app.listen(3000, () => {
-    console.log("Server is Up and Running!");
+	console.log('Server is Up and Running!');
 });
 
 //require("./src/bootstrap")();
