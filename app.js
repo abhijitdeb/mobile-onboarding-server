@@ -39,58 +39,58 @@ const getApplications = async (appSponsorName) => {
 
 const createApplication = async (input) => {
     return await Application.create({
-        userId: input.application.userId,
-        appTeamContactInfo: input.application.appTeamContactInfo,
-        appName: input.application.appName,
-        appSponsorName: input.application.appSponsorName,
-        appSponsorEmail: input.application.appSponsorEmail,
-        appSponsorPhoneNumber: input.application.appSponsorPhoneNumber,
-        appDescription: input.application.appDescription,
-        targetDeviceModels: input.application.targetDeviceModels,
-        authMethod: input.application.authMethod,
-        vpnTunnelNeeded: input.application.vpnTunnelNeeded,
-        networkAccessRequired: input.application.networkAccessRequired,
-        securityScansCompleted: input.application.securityScansCompleted,
-        deploymentDate: input.application.deploymentDate,
-        releaseCycle: input.application.releaseCycle,
-        endUserGroups: input.application.endUserGroups,
-        numberOfEndUsers: input.application.numberOfEndUsers,
-        mandatoryApplication: input.application.mandatoryApplication,
-        addedSecurityStandards: input.application.addedSecurityStandards,
-        additionalComments: input.application.additionalComments,
-        rating: input.application.rating,
+        userId: input.userId,
+        appTeamContactInfo: input.appTeamContactInfo,
+        appName: input.appName,
+        appSponsorName: input.appSponsorName,
+        appSponsorEmail: input.appSponsorEmail,
+        appSponsorPhoneNumber: input.appSponsorPhoneNumber,
+        appDescription: input.appDescription,
+        targetDeviceModels: input.targetDeviceModels,
+        authMethod: input.authMethod,
+        vpnTunnelNeeded: input.vpnTunnelNeeded,
+        networkAccessRequired: input.networkAccessRequired,
+        securityScansCompleted: input.securityScansCompleted,
+        deploymentDate: input.deploymentDate,
+        releaseCycle: input.releaseCycle,
+        endUserGroups: input.endUserGroups,
+        numberOfEndUsers: input.numberOfEndUsers,
+        mandatoryApplication: input.mandatoryApplication,
+        addedSecurityStandards: input.addedSecurityStandards,
+        additionalComments: input.additionalComments,
+        rating: input.rating,
     }).catch(errHandler);
 };
 
 const updateApplication = async (input) => {
     await Application.update(
         {
-            userId: input.application.userId,
-            appTeamContactInfo: input.application.appTeamContactInfo,
-            appName: input.application.appName,
-            appSponsorName: input.application.appSponsorName,
-            appSponsorEmail: input.application.appSponsorEmail,
-            appSponsorPhoneNumber: input.application.appSponsorPhoneNumber,
-            appDescription: input.application.appDescription,
-            targetDeviceModels: input.application.targetDeviceModels,
-            authMethod: input.application.authMethod,
-            vpnTunnelNeeded: input.application.vpnTunnelNeeded,
-            networkAccessRequired: input.application.networkAccessRequired,
-            securityScansCompleted: input.application.securityScansCompleted,
-            deploymentDate: input.application.deploymentDate,
-            releaseCycle: input.application.releaseCycle,
-            endUserGroups: input.application.endUserGroups,
-            numberOfEndUsers: input.application.numberOfEndUsers,
-            mandatoryApplication: input.application.mandatoryApplication,
-            addedSecurityStandards: input.application.addedSecurityStandards,
-            additionalComments: input.application.additionalComments,
-            rating: input.application.rating,
+            userId: input.userId,
+            appTeamContactInfo: input.appTeamContactInfo,
+            appName: input.appName,
+            appSponsorName: input.appSponsorName,
+            appSponsorEmail: input.appSponsorEmail,
+            appSponsorPhoneNumber: input.appSponsorPhoneNumber,
+            appDescription: input.appDescription,
+            targetDeviceModels: input.targetDeviceModels,
+            authMethod: input.authMethod,
+            vpnTunnelNeeded: input.vpnTunnelNeeded,
+            networkAccessRequired: input.networkAccessRequired,
+            securityScansCompleted: input.securityScansCompleted,
+            deploymentDate: input.deploymentDate,
+            releaseCycle: input.releaseCycle,
+            endUserGroups: input.endUserGroups,
+            numberOfEndUsers: input.numberOfEndUsers,
+            mandatoryApplication: input.mandatoryApplication,
+            addedSecurityStandards: input.addedSecurityStandards,
+            additionalComments: input.additionalComments,
+            rating: input.rating,
         },
         {
-            where: { id: input.application.id },
+            where: { id: input.id },
         }
     ).catch(errHandler);
-    return await Application.findByPk(input.application.id).catch(errHandler);
+    return await Application.findByPk(input.id).catch(errHandler);
 };
 
 //GraphQL Schema
@@ -129,7 +129,27 @@ const schema = buildSchema(`
     }
 
     input ApplicationInput {
-        application: Application
+        id: Int
+        userId: Int,
+        appTeamContactInfo: String,
+        appName: String,
+        appSponsorName: String,
+        appSponsorEmail: String,
+        appSponsorPhoneNumber: String,
+        appDescription: String,
+        targetDeviceModels: String,
+        authMethod: String,
+        vpnTunnelNeeded: String,
+        networkAccessRequired: String,
+        securityScansCompleted: String,
+        deploymentDate: String,
+        releaseCycle: String,
+        endUserGroups: String,
+        numberOfEndUsers: Int,
+        mandatoryApplication: String,
+        addedSecurityStandards: String,
+        additionalComments: String,
+        rating: Int
     }
 
     type Query {
