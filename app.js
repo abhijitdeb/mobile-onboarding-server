@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const express_graphql = require('express-graphql');
 const { buildSchema } = require('graphql');
 const User = require('./src/models/User');
@@ -181,6 +182,7 @@ const certificate = fs.readFileSync('./sslcert/cbp-mobile-server.cert', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
+app.use(cors());
 
 app.use(
 	'/graphql',
